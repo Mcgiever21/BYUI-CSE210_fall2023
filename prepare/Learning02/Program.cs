@@ -94,5 +94,4 @@ class Program
             else {c22.ErrorControl = 2; throw new ArgumentException( string.Format("answer was out of bounds, please type 'yes' or 'no'.")); }
         }
     }
-    
 }
