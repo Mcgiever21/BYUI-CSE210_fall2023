@@ -16,13 +16,15 @@ class Program
         Resume resume = new Resume();
         Console.WriteLine("enter name");
         resume.name = Console.ReadLine();
-        int runs = 0;
+        int runs = 1;
         Job job2 = new Job();
         string FinalAnswer;
 
         do{
             
             string Patrick;
+            string Phill;
+            string Steve;
             do{
                 
                 Job job = new Job();
@@ -30,22 +32,62 @@ class Program
                 job._jobTitle = Console.ReadLine();
                 Console.WriteLine("insert company name: ");
                 job._company = Console.ReadLine();
-                Console.WriteLine("insert final year of work: ");
-                job._endYear = Console.ReadLine();
-                Console.WriteLine("insert initial year of work: ");
-                job._startYear = Console.ReadLine();
+                
+                do{
+                    c22.numControlYear = 2;
+                    Console.WriteLine("insert final year of work: ");
+                    job._endYear = Console.ReadLine();
+                    Steve = Console.ReadLine();
+                   try 
+                    {
+                        c22.ExceptionYear(Steve);
+                    } 
+                    catch (FormatException e) 
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                }while (c22.numControlYear == 2);
+                
+                do{
+                    c22.numControlYear = 2;
+                    Console.WriteLine("insert initial year of work: ");
+                    job._startYear = Console.ReadLine();
+                    job._endYear = Console.ReadLine();
+                    Phill = Console.ReadLine();
+                   try 
+                    {
+                        c22.ExceptionYear(Phill);
+                        c22.YearAdapt(Steve,Phill);
+                    } 
+                    catch (FormatException e) 
+                    {
+                        Console.WriteLine(e.Message);
+                        Console.WriteLine(e.Message);
+                    }
+                    /*try{
+                        c22.YearAdapt(Steve,Phill);
+                    }
+                    catch (ArgumentException e){
+                        Console.WriteLine(e.Message);
+                    }*/
+
+                }while (c22.numControlYear == 2);
+
                 resume.jobs.Add(job);
                 runs = ++runs;
+
                 do{
-                Console.WriteLine("Do you wish to enter a new job experience?");
-                Patrick = Console.ReadLine();
-                try{ 
-                    ExceptionInput(Patrick);
-                }
-                catch (ArgumentException e) 
-                {
-                    Console.WriteLine(e.Message);
-                }
+                    Console.WriteLine($"There are {0} jobs entered", runs);
+                    Console.WriteLine("Do you wish to enter a new job experience?");
+                    Patrick = Console.ReadLine();
+                    try{ 
+                        c22.ExceptionInput(Patrick);
+                    }
+                    catch (ArgumentException e) 
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    
                 }while (c22.ErrorControl == 2);
             
 
@@ -54,12 +96,23 @@ class Program
 
             do{
                 
-                Console.WriteLine("type zero for list all jobs, or type a number for a specific job");
-
+                string listAnswer;
                 int countJobs = resume.jobs.Count();
-                int listAnswer = int.Parse(Console.ReadLine());
 
-                if (listAnswer == 0){
+                do{
+                    Console.WriteLine("type zero for list all jobs, or type a number for a specific job");
+                    listAnswer = Console.ReadLine();
+                    try{
+                        c22.numCheck(listAnswer);
+                    }
+                    catch (FormatException e){
+                        Console.WriteLine(e.Message);
+                    }
+                }while (c22.numC > 0);
+                
+                int Answer = int.Parse(listAnswer);
+
+                if (Answer == 0){
         
                     for(int i = 0; i < countJobs ; i ++)
                     {
@@ -68,9 +121,9 @@ class Program
                     sand = 1;
                     
                 }
-                else if (listAnswer > 0)
+                else if (Answer > 0)
                 {
-                    Job selectedJob = resume.jobs[listAnswer - 1];
+                    Job selectedJob = resume.jobs[Answer - 1];
                     Console.WriteLine($"title: {selectedJob._jobTitle}\nCompany: {selectedJob._company}\nstarting year: {selectedJob._startYear}\nEnd Year: {selectedJob._endYear}");
                     Console.Write(selectedJob);
                     Console.WriteLine("Would you like to list another job?");
@@ -78,7 +131,7 @@ class Program
                     if (Request =="no") { sand = 1; }
                 }
                 else{
-                    if (listAnswer > countJobs) { Console.WriteLine("invalid entry");}
+                    if (Answer > countJobs) { Console.WriteLine("invalid entry");}
                 }
         
             } while ( sand == 0 ); 
@@ -87,11 +140,6 @@ class Program
             FinalAnswer = Console.ReadLine();
         }while ( FinalAnswer == "yes");
 
-        string ExceptionInput( string i)
-        {
-            if (i == "yes"){c22.ErrorControl = 1; return ""; }
-            else if (i == "no"){ c22.ErrorControl = 1; return ""; }
-            else {c22.ErrorControl = 2; throw new ArgumentException( string.Format("answer was out of bounds, please type 'yes' or 'no'.")); }
-        }
+        
     }
 }
