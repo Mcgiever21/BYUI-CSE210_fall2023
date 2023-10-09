@@ -16,15 +16,14 @@ class Program
         Resume resume = new Resume();
         Console.WriteLine("enter name");
         resume.name = Console.ReadLine();
-        int runs = 1;
+        int runs = 0;
         Job job2 = new Job();
         string FinalAnswer;
 
         do{
             
             string Patrick;
-            string Phill;
-            string Steve;
+
             do{
                 
                 Job job = new Job();
@@ -37,10 +36,9 @@ class Program
                     c22.numControlYear = 2;
                     Console.WriteLine("insert final year of work: ");
                     job._endYear = Console.ReadLine();
-                    Steve = Console.ReadLine();
                    try 
                     {
-                        c22.ExceptionYear(Steve);
+                        c22.ExceptionYear(job._endYear);
                     } 
                     catch (FormatException e) 
                     {
@@ -52,16 +50,14 @@ class Program
                     c22.numControlYear = 2;
                     Console.WriteLine("insert initial year of work: ");
                     job._startYear = Console.ReadLine();
-                    job._endYear = Console.ReadLine();
-                    Phill = Console.ReadLine();
+                    
                    try 
                     {
-                        c22.ExceptionYear(Phill);
-                        c22.YearAdapt(Steve,Phill);
+                        c22.ExceptionYear(job._startYear);
+                        c22.YearAdapt(job._endYear,job._startYear);
                     } 
                     catch (FormatException e) 
                     {
-                        Console.WriteLine(e.Message);
                         Console.WriteLine(e.Message);
                     }
                     /*try{
@@ -77,7 +73,7 @@ class Program
                 runs = ++runs;
 
                 do{
-                    Console.WriteLine($"There are {0} jobs entered", runs);
+                    Console.WriteLine("There are {0} jobs entered",runs);
                     Console.WriteLine("Do you wish to enter a new job experience?");
                     Patrick = Console.ReadLine();
                     try{ 

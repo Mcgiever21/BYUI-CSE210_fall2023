@@ -3,21 +3,16 @@ using System.Collections.Generic;
 
 class MathAss : Assignment
 {
-    private string _textbookSection;
-    private string _problems;
+    public string _textbookSection = "Textbook section";
+    public string _problems = "Promblem list";
 
 
-    private void setMathAssVar()
+    public void setMathAssVar()
     {
-        _textbookSection = SetVar(_textbookSection);
-        _problems = SetVar(_problems);
+        ConsoleGetter con = new ConsoleGetter();
+        _textbookSection = con.Getter(_textbookSection);
+        _problems = con.Getter(_problems);
 
     }
-    public string GetHomeworkList()
-    {
-        setMathAssVar();
-        return ($"{_textbookSection} - {_problems}");
-    }
-
 
 }

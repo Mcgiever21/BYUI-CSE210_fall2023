@@ -4,17 +4,17 @@ using System.Collections.Generic;
 
 public class Assignment
 {
-    private string _studentName;
-    private string _topic;
+    private string _studentName = "Student Name";
+    public string _topic = "Topic";
 
 
     private void SetAssVariables()
     {
-        ConsoleGetter con = new ConsoleGetter();
+        //ConsoleGetter con = new ConsoleGetter();
         string var = "studentname";
-        _studentName = con.Getter(var);
-        var = _topic;
-        _topic = con.Getter(var);
+        _studentName = SetVar(var);
+        //var = _topic;
+        //_topic = SetVar(var);
     }
 
     public string SetVar(string var)
@@ -22,9 +22,9 @@ public class Assignment
         ConsoleGetter con = new ConsoleGetter();
         return con.Getter(var);
     }
-    public string GetSummary()
+    public void GetSummary()
     {
         SetAssVariables();
-        return ($"{_studentName} - {_topic}");
+        Console.WriteLine($"{_studentName} - {_topic}");
     }
 }

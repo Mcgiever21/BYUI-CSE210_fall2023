@@ -3,18 +3,14 @@ using System.Collections.Generic;
 
 class WritingAss : Assignment
 {
-    private string _title;
+    public string _title = "Title";
 
 
-    private void setwritAssVar()
+    public void setwritAssVar()
     {
-        _title = SetVar(_title);
+        ConsoleGetter con = new ConsoleGetter();
+        _title = con.Getter(_title);
 
-    }
-    public string GetBookList()
-    {
-        setwritAssVar();
-        return _title;
     }
 
 }
