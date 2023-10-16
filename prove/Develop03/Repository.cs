@@ -56,7 +56,11 @@ class Repository
     public Dictionary<string,List<Word>> AddScripture()
     {
         Scripture scripture = new Scripture();
-        Console.WriteLine($"current book to add scriptures to is {bookfile}, to change books, please go back to main and retrieve scriptures from a different book");
+        //try
+        //{
+            Console.WriteLine($"current book to add scriptures to is {bookfile}, to change books, please go back to main and retrieve scriptures from a different book");
+        //}
+        //catch(Exception e ){Console.WriteLine(e.Message); ;}
 
         bool checker = false;
         
@@ -163,4 +167,10 @@ class Repository
         outputFile.Write($"\n{reference}|{script}");
         }
     }
+
+   /* public string ExceptionInput( string i)
+    {
+        if (i == ""){throw new ArgumentException( string.Format("book not loaded, please load a book through the menu."));}
+        else{return " ";}
+    }*/
 }}

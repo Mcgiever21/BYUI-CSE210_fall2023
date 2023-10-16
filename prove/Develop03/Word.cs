@@ -25,7 +25,7 @@ public class Word
             if (scripture[number]._visible == true)
             {
                 scripture[number]._visible = false;
-                scripture[number]._text = "____";
+                scripture[number]._text = " ____ ";
             }
         }
         return scripture;

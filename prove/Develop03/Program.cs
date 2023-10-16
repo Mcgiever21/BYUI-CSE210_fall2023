@@ -23,8 +23,12 @@ class Program
             repository.RetrieveBook();
         }
         else if (menu_select == "2"){
-            
+            if(repository.bookfile== ""){
+                Console.WriteLine("book is not selected, please select load book in menu");
+                Main(args);
+            }
             repository.AddScripture();
+            
         }
         else if (menu_select == "3"){ 
             
@@ -33,7 +37,7 @@ class Program
         else if (menu_select == "5"){
             repository.NewBook();
         }
-        else if (menu_select == " "4){
+        else if (menu_select == "4"){
             int checker = 1;
             Word word = new Word();
             Scripture scripture = new Scripture();
@@ -62,6 +66,12 @@ class Program
             } while (boolchecker != scripture.verselength);
         scripture.scripture = versememory;
         }
+        else if (menu_select == "quit"){entry = "quit";}
         } while (entry != "quit");
     }
+    /*public string ExceptionInput( string i)
+    {
+        if (i == ""){throw new ArgumentException( string.Format("book not loaded, please load a book through the menu."));}
+        else{return " ";}
+    }*/
 }}
