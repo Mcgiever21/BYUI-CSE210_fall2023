@@ -1,17 +1,22 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
+using System.ComponentModel;
+using System.Data;
 
 namespace scripturememory
 {
 
-class Repository
+public class Repository
 {
 
-    public Dictionary<string, List<Word>> book;
-    public string bookfile ="";
+    private Dictionary<string, List<Word>> book;
+    private string bookfile ="";
     string reference = "";
     //string bookFile;
+
+    public string getbookfilename(){string bookname = bookfile; return bookname; }
 
     public Dictionary<string, List<Word>> RetrieveBook()
     {
@@ -40,11 +45,11 @@ class Repository
                 foreach (string singleword in verselist)
                 {
                     Word word = new Word();
-                    word._text = singleword;
-                    scripture.scripture.Add(word);
+                    word.recieveText(singleword);
+                    scripture.verse.Add(word);
                 }
 
-                book.Add( parts[0] , scripture.scripture );
+                book.Add( parts[0] , scripture.verse );
             }
         }
         else
@@ -55,7 +60,7 @@ class Repository
 
     public Dictionary<string,List<Word>> AddScripture()
     {
-        Scripture scripture = new Scripture();
+        
         //try
         //{
             Console.WriteLine($"current book to add scriptures to is {bookfile}, to change books, please go back to main and retrieve scriptures from a different book");
@@ -63,7 +68,7 @@ class Repository
         //catch(Exception e ){Console.WriteLine(e.Message); ;}
 
         bool checker = false;
-        
+        Scripture scripture = new();
         do 
         {
             Console.WriteLine("enter the scripture reference in format ch:vs' with no spaces: ");
@@ -80,19 +85,17 @@ class Repository
         Console.WriteLine("enter the scripture corresponding the above entered reference: ");
         string line = Console.ReadLine();
         string[] verselist = line.Split(" ");
-        foreach (string singleword in verselist)
-        {
-            Word word = new Word();
-            word._text = singleword;
-            scripture.scripture.Add(word);
-        }
-        book.Add(reference, scripture.scripture);
+
+        
+        scripture.getsetVerse(verselist, scripture);
+         
+        book.Add(reference, scripture.verse);
 
         string path = bookfile; 
         bool exists = path.Contains(reference);
         if (exists == false)
         {
-            print2file();
+            print2file(scripture);
         }
         else
         {
@@ -111,20 +114,20 @@ class Repository
         if (exists == true)
         {
             Scripture scripture = new Scripture();
-            scripture.scripture = book[reference];
-            Console.Write(scripture.scripture);
+            scripture.verse = book[reference];
+            Console.Write(scripture.verse);
             Console.WriteLine("Please type the verse to replace this verse entirely:");
                         string line = Console.ReadLine();
             string[] verselist = line.Split(" ");
             foreach (string singleword in verselist)
             {
                 Word word = new Word();
-                word._text = singleword;
-                scripture.scripture.Add(word);
+                word.recieveText(singleword);
+                scripture.verse.Add(word);
             }
-            book[reference] = scripture.scripture;
+            book[reference] = scripture.verse;
             FileRetriever();
-            print2file();
+            print2file(scripture);
         }
 
         else 
@@ -137,35 +140,48 @@ class Repository
     public void NewBook()
     {
         book = new Dictionary<string, List<Word>>();
-        Word word = new Word();
-        Scripture scripture = new Scripture();
-        word._text = "newbookopened";
-        scripture.scripture.Add(word);
+        Word word = new();
+        Scripture scripture = new();
+        //word.recieveText("newbookopened");
+        //scripture.Add(word);
         
         Console.WriteLine("enter name of book: ");
-        bookfile = Console.ReadLine();
-        bookfile = $"{bookfile}.txt";   
-        reference = "1:100";
-        print2file();
+        reference = "1:0";
+        bookfile = Console.ReadLine();   
+        //print2file(scripture);
          
     }
 
     public Repository(){}
 
-    private void print2file()
+    private void print2file(Scripture scripture)
     {
         using (StreamWriter outputFile = new StreamWriter(bookfile))
         {
-        Scripture scripture = new Scripture();
-        //string path = $"C:\\Users\\matt-\\Documents\\CSE210\\prove\\Develop03\\Library\\{bookfile}txt"; 
-        scripture.scripture = book[reference];
-        string script = "";
-        foreach (Word word in scripture.scripture)
-        {
-            script.Insert(script.Length,$"{word._text} ");
+            Word word = new();
+            //Scripture scripture = new Scripture();
+            string path = $"C:\\Users\\matt-\\Documents\\CSE210\\prove\\Develop03\\Library\\{bookfile}txt"; 
+            scripture.verse = book[reference];
+            List<string> script = new();
+            
+            foreach ( Word i in scripture.verse)
+            {
+                script.Add($"{word.sendText()} ");
+                
+            }
+            outputFile.Write($"\n{reference}|{script}");
         }
-        outputFile.Write($"\n{reference}|{script}");
-        }
+    }
+
+    public Dictionary<string, List<Word>> SendDict()
+    {
+        Dictionary<string, List<Word>> Aa = book;
+        return Aa;
+    }
+    public void RecieveDict(Dictionary<string, List<Word>> Bb)
+    {
+        book = Bb;
+        return ;
     }
 
    /* public string ExceptionInput( string i)

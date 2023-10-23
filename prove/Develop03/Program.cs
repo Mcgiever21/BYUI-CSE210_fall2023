@@ -13,17 +13,19 @@ class Program
         
         Console.WriteLine("Let's memorize some scriptures");
         string entry = "";
+        Repository repository = new Repository();
+        Scripture scripture = new();
         do
         {
         Console.WriteLine("enter 1 for load a book, 2 for record a scripture, 3 for edit a scripture, 4 for memorize a scripture, 5 for a new book, type quit to leave");
         string menu_select = Console.ReadLine();
-        Repository repository = new Repository();
+        
         if (menu_select == "1"){
             
             repository.RetrieveBook();
         }
         else if (menu_select == "2"){
-            if(repository.bookfile== ""){
+            if(repository.getbookfilename()== ""){
                 Console.WriteLine("book is not selected, please select load book in menu");
                 Main(args);
             }
@@ -40,31 +42,45 @@ class Program
         else if (menu_select == "4"){
             int checker = 1;
             Word word = new Word();
-            Scripture scripture = new Scripture();
+            //Scripture scripture = new();
             int boolchecker=0;
-            do
+            Console.WriteLine("enter the reference of the scripture in form ch:verse with no spaces:");
+            string reff = Console.ReadLine();
+            List<Word> versememory;
+            Dictionary<string, List<Word>> boo = repository.SendDict();
+            bool exists = boo.ContainsKey(reff);
+            if (exists == true)
             {
-                scripture.GetVerse(repository.book);
-                if (scripture.verselength <= 1) {checker = 0;}
-            } while( checker == 1);
-            Console.Write($"\n{scripture.scripture}");
-            List<Word> versememory = scripture.scripture;
-            do
+                do
+                {
+                    scripture.GetVerse(repository, reff, boo);
+                    if (scripture.sendVerseL() <= 1) {checker = 0;}
+                } while( checker == 1);
+                Console.Write($"\n{scripture.verse}");
+                versememory = scripture.verse;
+                do
+                {
+                    scripture.verse = word.HideWord(scripture.verse);
+                    foreach (Word text in scripture.verse)
+                    {
+                        boolchecker = 0;
+                        if (text._visible == false){ boolchecker += 1;}
+                        Console.Write($"\n{scripture.verse}");
+                    }
+                    entry = Console.ReadLine();
+                    if (entry == "quit")
+                    {
+                        boolchecker = scripture.sendVerseL();
+                    }
+                } while (boolchecker != scripture.sendVerseL());
+                scripture.verse = versememory;
+            }
+            else if (exists == false)
             {
-                scripture.scripture = word.HideWord(scripture.scripture);
-                foreach (Word text in scripture.scripture)
-                {
-                    boolchecker = 0;
-                    if (text._visible == false){ boolchecker += 1;}
-                    Console.Write($"\n{scripture.scripture}");
-                }
-                entry = Console.ReadLine();
-                if (entry == "quit")
-                {
-                    boolchecker = scripture.verselength;
-                }
-            } while (boolchecker != scripture.verselength);
-        scripture.scripture = versememory;
+                Console.WriteLine("invalid reference");
+
+            }
+            
         }
         else if (menu_select == "quit"){entry = "quit";}
         } while (entry != "quit");

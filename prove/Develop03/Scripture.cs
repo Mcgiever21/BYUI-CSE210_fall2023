@@ -1,31 +1,56 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
+using System.Data;
 
 namespace scripturememory
 {
 
-class Scripture
+public class Scripture
 {
-    public List<Word> scripture;
-    public int verselength;
+    public List<Word> verse;
+    private int verselength;
 
-    public void GetVerse(Dictionary< string , List<Word> > book)
+#pragma warning disable IDE0060
+    public void getsetVerse(string[] verselist, Scripture scripture)
+#pragma warning restore IDE0060
     {
-        Console.WriteLine("enter the reference of the scripture in form ch:verse with no spaces:");
-        string reference = Console.ReadLine();
-        bool exists = book.ContainsKey(reference);
-        if (exists == true)
+        
+        foreach (string singleword in verselist)
         {
-            scripture = book[reference];
-            verselength =scripture.Count;
-            return;
+            Word word = new();
+            word.recieveText(singleword);
+            verse.Add(word);
+            
         }
-        else if (exists == false)
-        {
-            Console.WriteLine("invalid reference");
-        }
+    
+   
     }
+
+   /* public List<Word> getScripture();
+    {
+        List<Word> verse = scripture;
+        return verse;
+    }*/
+    public void GetVerse(Repository repository, string reff, Dictionary<string, List<Word>> boo)
+    {
+            verse = boo[reff];
+            verselength =verse.Count;
+            return;
+        
+    }
+
+    public int sendVerseL()
+    {
+        int alpha = verselength;
+        return alpha;
+    }
+
+    //public void AddScripture(Word)
+    //{
+    //    scripture.Add(Word);
+    //}
 
 
 }}

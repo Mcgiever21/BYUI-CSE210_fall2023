@@ -7,27 +7,37 @@ namespace scripturememory
 public class Word
 {
     public bool _visible = true;
-    public string _text = "";
+    private string _text = "";
 
 
-    public Word(){ Word word = new Word();}
+    //public Word(){ Word word = new Word();}
 
 
-    public List<Word> HideWord(List<Word> scripture)
+    public List<Word> HideWord(List<Word> verse)
     {
-        int length =scripture.Count;
+        int length =verse.Count;
         Random rand = new Random();
         int spacing = length/4;
         for (int i = 0 ; i < spacing ; i++)
         {
             int number = rand.Next(length);
             
-            if (scripture[number]._visible == true)
+            if (verse[number]._visible == true)
             {
-                scripture[number]._visible = false;
-                scripture[number]._text = " ____ ";
+                verse[number]._visible = false;
+                verse[number]._text = " ____ ";
             }
         }
-        return scripture;
+        return verse;
+    }
+    public string sendText()
+    {
+        string w = _text;
+        return w;
+    }
+     public void recieveText(string w)
+    {
+        _text = w;
+        return ;
     }
 }}
