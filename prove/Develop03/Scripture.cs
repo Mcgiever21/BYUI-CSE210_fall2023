@@ -21,7 +21,7 @@ public class Scripture
         {
             Word word = new();
             word.recieveText(singleword);
-            verse.Add(word);
+            scripture.verse.Add(word);
             
         }
     
