@@ -38,6 +38,5 @@ public class Word
      public void recieveText(string w)
     {
         _text = w;
-        return ;
     }
 }}

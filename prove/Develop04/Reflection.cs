@@ -5,8 +5,25 @@ using System.Security.Cryptography;
 namespace relax{
 class Reflection : ActivityBase
 {
-    private List<string> options1;
-    private List<string> options2;
+    private List<string> options1= new List<string>{
+        "Think of a time when you were happy last week.",
+        "Think of a time when you made someone else happy.",
+        "Think of a time when someone did something nice for you.",
+        "Think of a time when you tried your hardest to achieve a goal.",
+        "Think of a time when your goals seemed just to far away.",
+        "Think of a time when life got hard.",
+        "Think of a time when life was easy."
+    };
+    private List<string> options2= new List<string>{
+    "What was something that had to be overcome?",
+        "How was your outlook at life changed after this experience?",
+        "How did your experience effect those around you?",
+        "What was learned from this experience?",
+        "How would you say that your life has been changed by this experience?",
+        "What will/have you do/done differently because of this experience?",
+        "What will you do now for those around you because of this experience?"
+    }
+    ;
     
     public void ActReflection(string actin)
     {
@@ -18,10 +35,10 @@ class Reflection : ActivityBase
     }
     public int ActRun()
     {
-        options1 = new List<string>();
-        options2 = new List<string>();
-        Option1Filler();
-        Option2Filler();
+        //options1 = new List<string>();
+        //options2 = new List<string>();
+        //Option1Filler();
+        //Option2Filler();
         Console.WriteLine("Please specify how long to do the activity.");
         int po = int.Parse(Console.ReadLine());
         Console.WriteLine("Lets Begin");
@@ -37,11 +54,11 @@ class Reflection : ActivityBase
     }
     public string RandomCounterOption2()
     {
-        Option2Filler();
+        //Option2Filler();
         string ans3 = options2[RandomNumberGenerator.GetInt32(options2.Count)];
         return ans3;
     }
-    private void Option1Filler()
+    /*private void Option1Filler()
     {
         options1.Add("Think of a time when you were happy last week.");
         options1.Add("Think of a time when you made someone else happy.");
@@ -53,13 +70,13 @@ class Reflection : ActivityBase
     }
     private void Option2Filler()
     {
-        options2.Add("What was something that had to be overcome?");
-        options2.Add("How was your outlook at life changed after this experience?");
-        options2.Add("How did your experience effect those around you?");
-        options2.Add("What was learned from this experience?");
-        options2.Add("How would you say that your life has been changed by this experience?");
-        options2.Add("What will/have you do/done differently because of this experience?");
-        options2.Add("What will you do now for those around you because of this experience?");
-    }
+        "What was something that had to be overcome?",
+        "How was your outlook at life changed after this experience?",
+        "How did your experience effect those around you?",
+        "What was learned from this experience?",
+        "How would you say that your life has been changed by this experience?",
+        "What will/have you do/done differently because of this experience?",
+        "What will you do now for those around you because of this experience?"
+    }*/
     
 }}

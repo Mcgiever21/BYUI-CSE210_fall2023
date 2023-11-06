@@ -51,22 +51,38 @@ class Program
             bool exists = boo.ContainsKey(reff);
             if (exists == true)
             {
-                do
-                {
+                //do
+                //{
                     scripture.GetVerse(repository, reff, boo);
                     if (scripture.sendVerseL() <= 1) {checker = 0;}
-                } while( checker == 1);
-                Console.Write($"\n{scripture.verse}");
-                versememory = scripture.verse;
+                //} while( checker == 1);
+                string script = "";
+                int b = 0;
+                foreach ( Word i in scripture.verse)
+                    {
+                        word = scripture.verse[b];
+                        script+=($" {word.sendText()} ");
+                        b++;
+                    }
+                Console.Write($"\n{script}");
+               versememory = scripture.verse;
                 do
                 {
+                    Console.Write("\b \b");
                     scripture.verse = word.HideWord(scripture.verse);
                     foreach (Word text in scripture.verse)
                     {
                         boolchecker = 0;
                         if (text._visible == false){ boolchecker += 1;}
-                        Console.Write($"\n{scripture.verse}");
                     }
+                    b = 0;
+                    foreach ( Word i in scripture.verse)
+                        {
+                            word = scripture.verse[b];
+                            script+=($" {word.sendText()} ");
+                            b++;
+                        };
+                    Console.Write($"\n{script}");
                     entry = Console.ReadLine();
                     if (entry == "quit")
                     {

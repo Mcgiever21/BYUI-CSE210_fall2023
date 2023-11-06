@@ -79,14 +79,14 @@ public class ActivityBase
         int n = 0;
         do
         {
-            Console.WriteLine("\b \b");
+            Console.Write("\b \b");
             string s = animationNow[n];
-            //Console.WriteLine(i);
-            Console.WriteLine(s);
-            if (Console.KeyAvailable)
-                { 
-                    if (Console.ReadKey(true).Key == ConsoleKey.Enter){g++;}
-                }
+            Console.WriteLine(i);
+            //Console.Write(s);
+            //if (Console.KeyAvailable)
+                //{ 
+                  //  if (Console.ReadKey(true).Key == ConsoleKey.Enter){g++;}
+              //  }
             Thread.Sleep(1000);
             //Console.WriteLine("\b \b");
             i++;
@@ -111,9 +111,12 @@ public class ActivityBase
             {
                 if(i==1){Console.WriteLine(statement1);}
                 
+                
                 if (Console.KeyAvailable)
                 { 
-                    if (Console.ReadKey(true).Key == ConsoleKey.Enter){g++;}
+                    if (Console.ReadKey(true).Key == ConsoleKey.Enter){
+                        g++;
+                        }
                 }
             }
         }while(DateTime.Now < EndTime);
