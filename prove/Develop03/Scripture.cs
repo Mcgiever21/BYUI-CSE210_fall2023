@@ -10,6 +10,10 @@ namespace scripturememory
 public class Scripture
 {
     public List<Word> verse;
+
+    public Scripture() {
+        this.verse = new List<Word>();
+    }
     private int verselength;
 
     public void SetVerse(Word word, Scripture scripture)

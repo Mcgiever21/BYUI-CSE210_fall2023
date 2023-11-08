@@ -38,6 +38,7 @@ public class Repository
             foreach (string line in lines)
             {
                 Scripture scripture = new Scripture();
+                scripture.verse = new List<Word>();
                 if (line == "" || line ==" "){}
                 else
                 {
