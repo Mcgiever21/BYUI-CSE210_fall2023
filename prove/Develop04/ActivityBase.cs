@@ -61,7 +61,7 @@ public class ActivityBase
      //  animationNow.Add("-");
      //  animationNow.Add("\\");
 
-    protected int TimeDelay( int po)
+    protected virtual int TimeDelay( int po)
     {
         Reflection reflection = new();
         int g = 0;

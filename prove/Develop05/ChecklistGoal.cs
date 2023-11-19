@@ -2,10 +2,10 @@ using System;
 
 namespace GoalTracker
 {
-public class SimpleG : Goal
+public class ChecklistG : Goal
 {
     //private int _quantity;
-    
+
    /* public override void SetType(string s)
     {
         _gType = s;
