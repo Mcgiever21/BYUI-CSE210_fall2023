@@ -9,7 +9,7 @@ namespace GoalTracker
 
 public class Repository
 {
-    string goalkeeper = "goalkeeper";
+    string goalkeeper = "goalkeeper.txt";
     string pointkeeper = "pointkeeper.txt";
 
     public void GoalWriter(List<Goal> G)
@@ -21,7 +21,7 @@ public class Repository
             File.WriteAllText(goalkeeper, string.Empty);
             foreach (var i in G)
             {
-                File.AppendAllText(goalkeeper, $"{i.GetType()}|{i.GetPoints()}|{i.GetComplete()}|{i.GetCompleted()}|{i.GetTotalEventQ()}");
+                File.AppendAllText(goalkeeper, $"{i.GetType()}|{i.GetPoints()}|{i.GetComplete()}|{i.GetCompleted()}|{i.GetTotalEventQ()}|{i.getTerms()}\n");
             }
         }
         else
@@ -29,7 +29,7 @@ public class Repository
             File.Create(goalkeeper);
             foreach (var i in G)
             {
-                File.AppendAllText(goalkeeper, $"{i.GetType()}|{i.GetPoints()}|{i.GetComplete()}|{i.GetCompleted()}|{i.GetTotalEventQ()}");
+                File.AppendAllText(goalkeeper, $"{i.GetType()}|{i.GetPoints()}|{i.GetComplete()}|{i.GetCompleted()}|{i.GetTotalEventQ()}|{i.getTerms()}\n");
             }
         }
     }
@@ -45,40 +45,45 @@ public class Repository
                 {
                     if (line == "" || line ==" "){}
                     else{
+                        Console.WriteLine("here");
                         string[] parts = line.Split("|");
                         part1 = parts[0];
                         switch (part1)
                         {
-                            case "SimpleG":
+                            case "GoalTracker.SimpleG":
                                 SimpleG sim = new();
-                                sim.SetType(parts[0]);
+                                sim.SetType("SimpleG");
                                 sim.SetPoints(Convert.ToDouble(parts[1]));
                                 sim.SetComplete(Convert.ToBoolean(parts[2]));
                                 sim.SetCompleted(int.Parse(parts[3]));
                                 sim.SetTotalEventQ(int.Parse(parts[4]));
+                                sim.SetGoal(parts[5]);
                                 Goals.Add(sim);
                                 break;
-                            case "EternalG":
+                            case "GoalTracker.EternalG":
                                 EternalG eter = new();
-                                eter.SetType(parts[0]);
+                                eter.SetType("EternalG");
                                 eter.SetPoints(Convert.ToDouble(parts[1]));
                                 eter.SetComplete(Convert.ToBoolean(parts[2]));
                                 eter.SetCompleted(int.Parse(parts[3]));
                                 eter.SetTotalEventQ(int.Parse(parts[4]));
+                                eter.SetGoal(parts[5]);
                                 Goals.Add(eter);
                                 break;
-                            case "CheckListG":
+                            case "GoalTracker.ChecklistG":
                                 ChecklistG chek = new();
-                                chek.SetType(parts[0]);
+                                chek.SetType("ChecklistG");
                                 chek.SetPoints(Convert.ToDouble(parts[1]));
                                 chek.SetComplete(Convert.ToBoolean(parts[2]));
                                 chek.SetCompleted(int.Parse(parts[3]));
                                 chek.SetTotalEventQ(int.Parse(parts[4]));
+                                chek.SetGoal(parts[5]);
                                 Goals.Add(chek);
                                 break;
                         }
                     }
                 }
+                Console.WriteLine(Goals.Count);
             return Goals;
         }
         else{File.Create(goalkeeper);return Goals;}
@@ -94,13 +99,14 @@ public class Repository
     }
     public double TallyReader()
     {
-        double pt = 0;
+        double am = 0;
         if (File.Exists(pointkeeper))
         { 
-            pt = int.Parse(File.ReadAllText(pointkeeper));
-            return pt;
+            string pt = File.ReadAllText(pointkeeper);
+            am = double.Parse(pt);
+            return am;
         }
-        else{return pt;}
+        else{return am;}
     }
 
 }

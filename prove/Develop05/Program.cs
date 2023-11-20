@@ -16,7 +16,6 @@ namespace GoalTracker
             int quit = 3;
             int counter = 0;
             Repository repo = new();
-            GRepeater gr = new();
             _goalList = repo.GoalReader();
             double _pointTotal = repo.TallyReader();
 
@@ -30,6 +29,7 @@ Select from the menu provided:
 4. view incomplete goals
 5. create new goal
 6. exit program
+7. view total points earned
                 "
                 );
                 _menu1input = int.Parse(Reader());
@@ -38,45 +38,55 @@ Select from the menu provided:
                     case 1:
                         foreach (Goal g in _goalList)
                         {
-                            printer($"{g.GetGoal()}");
+                            g.GetGoal();
+                            Console.WriteLine();
                         }
                         break;
                     case 2:
                         counter = 0;
-                        foreach (Goal g in _goalList)
-                        {
-                            printer($"{counter} {g.GetGoal()}");
-                            counter++;
-                        }             
-                        printer("enter number coresponding to goal");
-                        int menu2 = int.Parse(Reader());    
-                        if(_goalList[menu2-1].GetType() == "SimpleG")
-                        {
-                            _goalList[menu2-1].SetComplete(true);
-                            _pointTotal = _pointTotal + _goalList[menu2-1].GetPoints();                           
-                        }
-                        else if (_goalList[menu2-1].GetType() == "EternalG")
-                        {
-                            _pointTotal = _pointTotal + _goalList[menu2-1].GetPoints();                            
-                        }
-                        else if (_goalList[menu2-1].GetType() == "CheckListG")
-                        {
-                            if(_goalList[menu2-1].GetCompleted() < _goalList[menu2-1].GetTotalEventQ())
+                        if(_goalList.Count == 0){Console.WriteLine("no goals recorded."); break;}
+                        else{
+                            foreach (Goal g in _goalList)
                             {
-                                _pointTotal = _pointTotal + _goalList[menu2-1].GetPoints();                              
-                            }
-                            else if (_goalList[menu2-1].GetCompleted() == _goalList[menu2-1].GetTotalEventQ())
+                                printer($"{counter}");
+                                g.GetGoal();
+                                counter++;
+                            }             
+                            printer("\n\nenter number coresponding to goal");
+                            int menu2 = int.Parse(Reader());    
+                            if(_goalList[menu2] is SimpleG)
                             {
-                                _goalList[menu2-1].SetComplete(true);
-                                _pointTotal = _pointTotal + _goalList[menu2-1].GetPoints() + 50;
+                                _goalList[menu2].SetComplete(true);
+                                _goalList[menu2].SetCompleted(1);
+                                _pointTotal = _pointTotal + _goalList[menu2].GetPoints();    
+                                //g.Repeater();                       
                             }
-                            else
+                            else if (_goalList[menu2] is EternalG)
                             {
-                                _goalList[menu2-1].SetComplete(true);
-                                _pointTotal = _pointTotal + _goalList[menu2-1].GetPoints();                               
+                                _pointTotal = _pointTotal + _goalList[menu2].GetPoints();                            
                             }
+                            else if (_goalList[menu2] is ChecklistG)
+                            {
+                                if(_goalList[menu2].GetCompleted() < _goalList[menu2].GetTotalEventQ())
+                                {
+                                    _pointTotal = _pointTotal + _goalList[menu2].GetPoints();    
+                                    _goalList[menu2].SetCompleted(1);                          
+                                }
+                                else if (_goalList[menu2].GetCompleted() == _goalList[menu2].GetTotalEventQ())
+                                {
+                                    _goalList[menu2].SetComplete(true);
+                                    _goalList[menu2].SetCompleted(1);
+                                    _pointTotal = _pointTotal + _goalList[menu2].GetPoints() + 50;
+                                }
+                                else
+                                {
+                                    _goalList[menu2].SetComplete(true);
+                                    _goalList[menu2].SetCompleted(1);
+                                    _pointTotal = _pointTotal + _goalList[menu2].GetPoints();                               
+                                }
+                            }
+                            break;
                         }
-                        break;
                     case 3:
 
                         int i = 0;
@@ -85,8 +95,9 @@ Select from the menu provided:
                             i++;
                             if (g.GetComplete() == true)
                             {
-                                printer($"{g.GetGoal}");
-                                switch (g.GetType())
+                                g.GetGoal();
+                                
+                                /*switch (g.GetType())
                                 {
                                     case "SimpleG":
 
@@ -103,7 +114,7 @@ Select from the menu provided:
                                         ChecklistG h = new();
                                         h = gr.Repeater(g);
                                         _goalList[i-1] = g;
-                                }
+                                }*/
                             }
                         }
                         break;
@@ -112,7 +123,7 @@ Select from the menu provided:
                         {
                             if (g.GetComplete() == false)
                             {
-                                printer($"{g.GetGoal()}");
+                                g.GetGoal();
                             }
                         }
                         break;
@@ -120,17 +131,18 @@ Select from the menu provided:
 
                         printer("Type how many times goal needs completed to terminate (eternal goals enter 0)");
                         int c = int.Parse(Reader());
-                        if (c > 1)
+                        if (c == 1)
                         {
                             SimpleG sim = new();
                             printer("Type Goal");
                             sim.SetGoal(Reader());
-                            printer("Type point value for goal");
+                            printer("\nType point value for goal");
                             sim.SetPoints(double.Parse(Reader()));
                             sim.SetTotalEventQ(c);
                             sim.SetComplete(false);
                             sim.SetCompletedNew(0);
                             sim.SetType("SimpleG");
+                            _goalList.Add(sim);
                             break;
                         }
                         else if ( c == 0 )
@@ -144,6 +156,7 @@ Select from the menu provided:
                             ete.SetComplete(false);
                             ete.SetCompletedNew(0);
                             ete.SetType("EternalG");
+                            _goalList.Add(ete);
                             break;
                         }
                         else 
@@ -156,12 +169,16 @@ Select from the menu provided:
                             che.SetTotalEventQ(c);
                             che.SetComplete(false);
                             che.SetCompletedNew(0);
-                            che.SetType("EternalG");
+                            che.SetType("ChecklistG");
+                            _goalList.Add(che);
                             break;
                         }
                     
                     case 6:
                         quit = 6;
+                        break;
+                    case 7:
+                        printer(_pointTotal.ToString());
                         break;
                 }
             }while (quit != 6);

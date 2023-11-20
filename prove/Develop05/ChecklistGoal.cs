@@ -50,9 +50,9 @@ public class ChecklistG : Goal
     {
         return _quantityNeeded;
     }
-    public override string GetGoal()
+    public override void GetGoal()
     {
-        return _goalTerms;
+        
     }
     public override void SetGoal(string s)
     {

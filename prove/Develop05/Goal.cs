@@ -16,10 +16,10 @@ public virtual void SetType(string s)
     {
         _gType = s;
     }
-    public virtual string GetType()
+    /*public virtual string GetType()
     {
         return _gType;
-    }
+    }*/
     public virtual void SetComplete(bool b)
     {
         _complete = b;
@@ -56,12 +56,25 @@ public virtual void SetType(string s)
     {
         return _quantityNeeded;
     }
-    public virtual string GetGoal()
+    public virtual void GetGoal()
+    {
+        Console.Write($"{_goalTerms} \n completed: {_quantityCompleted}/{_quantityNeeded}");
+    }
+    public virtual string getTerms()
     {
         return _goalTerms;
     }
     public virtual void SetGoal(string s)
     {
         _goalTerms = s;
+    }
+    public virtual void Repeater()
+    {
+        Console.WriteLine("Would you like to repeat the goal?");
+        if(Console.ReadLine() == "yes" || Console.ReadLine() == "Yes")
+        {
+            _quantityCompleted = 0;
+        }
+        else{return;}
     }
 }}
