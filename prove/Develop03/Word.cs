@@ -8,6 +8,7 @@ public class Word
 {
     public bool _visible = true;
     private string _text = "";
+    //private string _textHide = "";
 
 
     //public Word(){ Word word = new Word();}
@@ -39,4 +40,5 @@ public class Word
     {
         _text = w;
     }
+
 }}

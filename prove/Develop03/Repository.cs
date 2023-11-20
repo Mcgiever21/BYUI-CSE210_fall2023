@@ -125,7 +125,8 @@ public class Repository
             scripture.verse = book[reference];
             Console.Write(scripture.verse);
             Console.WriteLine("Please type the verse to replace this verse entirely:");
-                        string line = Console.ReadLine();
+            scripture.verse.Clear();
+            string line = Console.ReadLine();
             string[] verselist = line.Split(" ");
             foreach (string singleword in verselist)
             {

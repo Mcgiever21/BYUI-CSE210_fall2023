@@ -17,7 +17,7 @@ class Program
         Scripture scripture = new();
         do
         {
-        Console.WriteLine("enter 1 for load a book, 2 for record a scripture, 3 for edit a scripture, 4 for memorize a scripture, 5 for a new book, type quit to leave");
+        Console.WriteLine("enter 1 for load a book, 2 for record a scripture, 4 for memorize a scripture, 5 for a new book, type quit to leave");
         string menu_select = Console.ReadLine();
         
         if (menu_select == "1"){
@@ -32,10 +32,10 @@ class Program
             repository.AddScripture();
             
         }
-        else if (menu_select == "3"){ 
+        /*else if (menu_select == "3"){ 
             
             repository.EditScripture();
-        }
+        }*/
         else if (menu_select == "5"){
             repository.NewBook();
         }
@@ -53,22 +53,24 @@ class Program
             {
                 //do
                 //{
-                    scripture.GetVerse(repository, reff, boo);
-                    if (scripture.sendVerseL() <= 1) {checker = 0;}
+                scripture.GetVerse(repository, reff, boo);
+                if (scripture.sendVerseL() <= 1) {return;}
                 //} while( checker == 1);
                 string script = "";
+                List<string> here = new();
                 int b = 0;
                 foreach ( Word i in scripture.verse)
                     {
                         word = scripture.verse[b];
                         script+=($" {word.sendText()} ");
+                        here.Add(word.sendText());
                         b++;
                     }
                 Console.Write($"\n{script}");
                versememory = scripture.verse;
                 do
                 {
-                    Console.Write("\b \b");
+                    //Console.Write("\b \b");
                     scripture.verse = word.HideWord(scripture.verse);
                     foreach (Word text in scripture.verse)
                     {
@@ -76,17 +78,19 @@ class Program
                         if (text._visible == false){ boolchecker += 1;}
                     }
                     b = 0;
+                    script = "";
                     foreach ( Word i in scripture.verse)
                         {
                             word = scripture.verse[b];
                             script+=($" {word.sendText()} ");
                             b++;
                         };
-                    Console.Write($"\n{script}");
+                    Console.WriteLine($"\b\b\n\n\n\n\n{script}");
                     entry = Console.ReadLine();
                     if (entry == "quit")
                     {
                         boolchecker = scripture.sendVerseL();
+                        Program.Main(args);
                     }
                 } while (boolchecker != scripture.sendVerseL());
                 scripture.verse = versememory;
