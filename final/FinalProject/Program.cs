@@ -25,6 +25,7 @@ class Program
 	{
 		Shoot sho = new();
 		Repository repo = new();
+		int ender = 3;
 		printer($@"
 		Current Charge {charge}
 		Current shots available {shotCount}
@@ -60,7 +61,8 @@ class Program
 				charge = 100;
 				break;
 			case 6: 
-				return (4, charge, shotCount, type);
+				ender = 4;
+				break;
 			case 7:
 				repo.FSR();
 				break;
@@ -71,7 +73,7 @@ class Program
 				(shotCount, charge) = sho.Single(shotCount, charge, type);
 				break;
 		}
-		return(3, charge, shotCount, type);
+		return(ender, charge, shotCount, type);
 
 	}
 

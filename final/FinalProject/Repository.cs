@@ -11,18 +11,19 @@ namespace GaussLaw
 class Repository
 {
     private string path = "shotimer.txt";
+    private string path2 = "keeper1.txt";
     public void Saver(double battCharge, int shotCount)
     {
-        File.Create("Keeper.txt");
-        File.WriteAllText("Keeper.txt", $"{battCharge}|{shotCount}");
+        //File.Create(path2);
+        File.WriteAllText(path2, $"{battCharge}|{shotCount}");
     }
     public (double battCharge, int shotCount) Caller()
     {
         double battCharge = 0;
         int shotCount = 0;
-        if(File.Exists("Keeper.txt") == true)
+        if(File.Exists(path2) == true)
         {
-            string[] _fileR = File.ReadAllLines("Keeper.txt");
+            string[] _fileR = File.ReadAllLines(path2);
                 foreach (string part in _fileR)
                 {
                     string[] parts = part.Split("|");
